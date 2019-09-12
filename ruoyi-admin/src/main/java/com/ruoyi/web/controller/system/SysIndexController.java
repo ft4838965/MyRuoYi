@@ -33,16 +33,16 @@ public class SysIndexController extends BaseController
         List<SysMenu> menus = menuService.selectMenusByUser(user);
         mmap.put("menus", menus);
         mmap.put("user", user);
-        mmap.put("copyrightYear", Global.getCopyrightYear());
+//        mmap.put("copyrightYear", Global.getCopyrightYear());
         mmap.put("demoEnabled", Global.isDemoEnabled());
+        mmap.put("name", Global.getName());
         return "index";
     }
-
     // 系统介绍
     @GetMapping("/system/main")
     public String main(ModelMap mmap)
     {
         mmap.put("version", Global.getVersion());
-        return "main";
+        return "main_v1";
     }
 }

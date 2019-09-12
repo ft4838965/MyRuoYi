@@ -1,6 +1,8 @@
 package com.ruoyi.common.config;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -73,7 +75,7 @@ public class Global
      */
     public static String getName()
     {
-        return StringUtils.nvl(getConfig("ruoyi.name"), "RuoYi");
+        return StringUtils.nvl(getConfig("ruoyi.name"), "未知");
     }
 
     /**
@@ -81,7 +83,7 @@ public class Global
      */
     public static String getVersion()
     {
-        return StringUtils.nvl(getConfig("ruoyi.version"), "4.0.0");
+        return StringUtils.nvl(getConfig("ruoyi.version"), "未知");
     }
 
     /**
@@ -89,7 +91,7 @@ public class Global
      */
     public static String getCopyrightYear()
     {
-        return StringUtils.nvl(getConfig("ruoyi.copyrightYear"), "2019");
+        return StringUtils.nvl(getConfig("ruoyi.copyrightYear"), new SimpleDateFormat("yyyy").format(new Date()));
     }
 
     /**
