@@ -2,7 +2,7 @@
 <ehcache name="ruoyi" updateCheck="false">
 
     <!-- 磁盘缓存位置 -->
-    <diskStore path="java.io.tmpdir"/>
+    <diskStore path="java.io.tmpdir/ehcache-shiro"/>
 
     <!-- 默认缓存 -->
     <defaultCache
