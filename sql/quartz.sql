@@ -12,7 +12,7 @@ create table QRTZ_JOB_DETAILS (
     is_nonconcurrent     varchar(1)      not null,
     is_update_data       varchar(1)      not null,
     requests_recovery    varchar(1)      not null,
-    job_data             blob            null,
+    job_data             blob(0)            null,
     primary key (sched_name,job_name,job_group)
 ) engine=innodb;
 
@@ -36,7 +36,7 @@ create table QRTZ_TRIGGERS (
     end_time             bigint(13)      null,
     calendar_name        varchar(200)    null,
     misfire_instr        smallint(2)     null,
-    job_data             blob            null,
+    job_data             blob(0)            null,
     primary key (sched_name,trigger_name,trigger_group),
     foreign key (sched_name,job_name,job_group) references QRTZ_JOB_DETAILS(sched_name,job_name,job_group)
 ) engine=innodb;
@@ -71,26 +71,26 @@ create table QRTZ_CRON_TRIGGERS (
 ) engine=innodb;
 
 -- ----------------------------
--- 5、 Trigger 作为 Blob 类型存储(用于 Quartz 用户用 JDBC 创建他们自己定制的 Trigger 类型，JobStore 并不知道如何存储实例的时候)
+-- 5、 Trigger 作为 blob(0) 类型存储(用于 Quartz 用户用 JDBC 创建他们自己定制的 Trigger 类型，JobStore 并不知道如何存储实例的时候)
 -- ---------------------------- 
-drop table if exists QRTZ_BLOB_TRIGGERS;
-create table QRTZ_BLOB_TRIGGERS (
+drop table if exists QRTZ_blob(0)_TRIGGERS;
+create table QRTZ_blob(0)_TRIGGERS (
     sched_name           varchar(120)    not null,
     trigger_name         varchar(200)    not null,
     trigger_group        varchar(200)    not null,
-    blob_data            blob            null,
+    blob(0)_data            blob(0)            null,
     primary key (sched_name,trigger_name,trigger_group),
     foreign key (sched_name,trigger_name,trigger_group) references QRTZ_TRIGGERS(sched_name,trigger_name,trigger_group)
 ) engine=innodb;
 
 -- ----------------------------
--- 6、 以 Blob 类型存储存放日历信息， quartz可配置一个日历来指定一个时间范围
+-- 6、 以 blob(0) 类型存储存放日历信息， quartz可配置一个日历来指定一个时间范围
 -- ---------------------------- 
 drop table if exists QRTZ_CALENDARS;
 create table QRTZ_CALENDARS (
     sched_name           varchar(120)    not null,
     calendar_name        varchar(200)    not null,
-    calendar             blob            not null,
+    calendar             blob(0)            not null,
     primary key (sched_name,calendar_name)
 ) engine=innodb;
 
