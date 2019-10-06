@@ -102,7 +102,7 @@ public class Tool<T> {
 	 * @param string
 	 * @return
 	 */
-	public static boolean isNull(Object string){
+	public static <T> boolean isNull(T string){
 		return string==null||"".equals(string.toString().trim())||"null".equals(string.toString().trim());
 	}
 	/**
@@ -121,6 +121,14 @@ public class Tool<T> {
 	 * @return
 	 */
 	public static <T> boolean listIsNull(List<T>list){return(list==null||list.isEmpty()||list.size()==0||(list.size()==1&&(list.get(0)==null||list.get(0).toString().trim()=="")));}
+	public static <T>T IFNULL(T toObject,T reObject){
+		if(isNull(toObject))return reObject;
+		else return toObject;
+	}
+	public static <T>List<T> IFNULL(List<T> toObject,List<T> reObject){
+		if(listIsNull(toObject))return reObject;
+		else return toObject;
+	}
 	/**
 	 * HttpServletRequest从上下文中获取,HttpServletResponse和HttpSession从HttpServletRequest获取
 	 * @return Object{HttpServletRequest,HttpServletResponse,HttpSession}
