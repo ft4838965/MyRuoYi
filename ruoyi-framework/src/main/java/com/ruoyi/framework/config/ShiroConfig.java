@@ -239,6 +239,10 @@ public class ShiroConfig
         shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
         // Shiro连接约束配置，即过滤链的定义
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        //微信小程序业务域名验证
+        filterChainDefinitionMap.put("/aP23cIIxGP.txt", "anon");
+        //https文件验证
+        filterChainDefinitionMap.put("/.well-known/pki-validation/fileauth.txt", "anon");
         // 对静态资源设置匿名访问
         filterChainDefinitionMap.put("/favicon.ico**", "anon");
         filterChainDefinitionMap.put("/ruoyi.png**", "anon");
@@ -257,6 +261,16 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
+        //小程序总接口
+        filterChainDefinitionMap.put("/xcx/**", "anon");
+        //工具总接口
+        filterChainDefinitionMap.put("/tool/**", "anon");
+        //工具部分接口需要验证
+        filterChainDefinitionMap.put("/tool/uploadMediaByBaseId", "authc");
+        filterChainDefinitionMap.put("/tool/uploadMediaByBaseIdToAli", "authc");
+        filterChainDefinitionMap.put("/tool/updateMedia", "authc");
+        filterChainDefinitionMap.put("/tool/deleteMedia", "authc");
+        filterChainDefinitionMap.put("/tool/saveMediaSort", "authc");
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         filters.put("onlineSession", onlineSessionFilter());

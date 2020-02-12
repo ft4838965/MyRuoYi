@@ -18,6 +18,8 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer
 {
+    public static final String FILE_UPLOAD_PATH_LOC="D:/项目测试路径/jjk/fileupload/";
+    public static final String FILE_UPLOAD_PATH_ONLINE="/lijun/jjk/fileupload/";
     /**
      * 首页地址
      */
@@ -39,12 +41,18 @@ public class ResourcesConfig implements WebMvcConfigurer
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
+        System.err.println("-----------------");
+        System.err.println("映射静态资源访问");
+        System.err.println("-----------------");
         /** 本地文件上传路径 */
         registry.addResourceHandler("/profile/**").addResourceLocations("file:" + Global.getProfile() + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        /* 微信小程序业务域名验证 */
+        registry.addResourceHandler("/aP23cIIxGP.txt").addResourceLocations(("file:"+(System.getProperty("os.name").toLowerCase().startsWith("win")? FILE_UPLOAD_PATH_LOC:FILE_UPLOAD_PATH_ONLINE)+"aP23cIIxGP.txt"));
     }
 
     /**

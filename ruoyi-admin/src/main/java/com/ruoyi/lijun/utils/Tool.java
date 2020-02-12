@@ -116,16 +116,15 @@ public class Tool<T> {
 	}
 	/**
 	 * 辅助方法:判断集合是否为空
-	 * @param <T>
 	 * @param list
 	 * @return
 	 */
-	public static <T> boolean listIsNull(List<T>list){return(list==null||list.isEmpty()||list.size()==0||(list.size()==1&&(list.get(0)==null||list.get(0).toString().trim()=="")));}
+	public static boolean listIsNull(List<?>list){return(list==null||list.isEmpty()||list.size()==0||(list.size()==1&&(list.get(0)==null||list.get(0).toString().trim()=="")));}
 	public static <T>T IFNULL(T toObject,T reObject){
 		if(isNull(toObject))return reObject;
 		else return toObject;
 	}
-	public static <T>List<T> IFNULL(List<T> toObject,List<T> reObject){
+	public List<T> IFNULL(List<T> toObject, List<T> reObject){
 		if(listIsNull(toObject))return reObject;
 		else return toObject;
 	}
@@ -154,50 +153,101 @@ public class Tool<T> {
 	 * @param keys
 	 * @return
 	 */
-	public static final List<Map<String, Object>> ListMapOrderByMapKeyDesc(List<Map<String, Object>> list,final String [] keys){
-	    Collections.sort(list,new Comparator<Map>() {
-	          public int compare(Map o1, Map o2) {
-	               return recursion(o1, o2, 0);
-	          }
-	          private int recursion(Map o1, Map o2, int i) {
-	               if (o1.containsKey(keys[i]) && o2.containsKey(keys[i])) {
-	                     Object value1 = o1.get(keys[i]);
-	                     Object value2 = o2.get(keys[i]);
-	                     if (value1 == null && value2 == null) {
-	                          if ((i+1) < keys.length) {
-	                                int recursion = recursion(o1, o2, i+1);
-	                                return recursion;
-	                          }else{
-	                                return 0;
-	                          }
-	                     }else if(value1 == null && value2 != null){
-	                          return 1;
-	                     }else if(value1 != null && value2 == null){
-	                          return -1;
-	                     }else{
-	                          if (value1.equals(value2)) {
-	                                if ((i+1) < keys.length) {
-	                                     return recursion(o1, o2, i+1);
-	                                }else{
-	                                     return 0;
-	                                }
-	                          }else{
-	                                if (value1 instanceof String && value2 instanceof String) {
-	                                     return value2.toString().compareTo(value1.toString());
-	                                }else if(value1 instanceof Timestamp && value2 instanceof Timestamp){
-	                                	return ((Timestamp)(value2)).compareTo(new Date(((Timestamp)(value1)).getTime()));
-	                                }else{
-	                                     return new BigDecimal(value2.toString()).compareTo(new BigDecimal(value1.toString()));
-	                                }
-	                          }
-	                     }
-	               }else{
-	                     System.out.println(" ** The current map do not containskey : " + keys[i] + ",or The value of key is null **");
-	                     return 0;
-	               }
-	          }
-	    });
-	    return list;
+	public static final List<Map<String, Object>> ListMapOrderByMapKeyDesc(List<Map<String, Object>> list,final String ... keys){
+		Collections.sort(list,new Comparator<Map>() {
+			public int compare(Map o1, Map o2) {
+				return recursion(o1, o2, 0);
+			}
+			private int recursion(Map o1, Map o2, int i) {
+				if (o1.containsKey(keys[i]) && o2.containsKey(keys[i])) {
+					Object value1 = o1.get(keys[i]);
+					Object value2 = o2.get(keys[i]);
+					if (value1 == null && value2 == null) {
+						if ((i+1) < keys.length) {
+							int recursion = recursion(o1, o2, i+1);
+							return recursion;
+						}else{
+							return 0;
+						}
+					}else if(value1 == null && value2 != null){
+						return 1;
+					}else if(value1 != null && value2 == null){
+						return -1;
+					}else{
+						if (value1.equals(value2)) {
+							if ((i+1) < keys.length) {
+								return recursion(o1, o2, i+1);
+							}else{
+								return 0;
+							}
+						}else{
+							if (value1 instanceof String && value2 instanceof String) {
+								return value2.toString().compareTo(value1.toString());
+							}else if(value1 instanceof Timestamp && value2 instanceof Timestamp){
+								return ((Timestamp)(value2)).compareTo(new Date(((Timestamp)(value1)).getTime()));
+							}else{
+								return new BigDecimal(value2.toString()).compareTo(new BigDecimal(value1.toString()));
+							}
+						}
+					}
+				}else{
+					System.out.println(" ** The current map do not containskey : " + keys[i] + ",or The value of key is null **");
+					return 0;
+				}
+			}
+		});
+		return list;
+	}
+	/**
+	 * 根据需要排序的字段数字,按顺序升序排列
+	 * @param list
+	 * @param keys
+	 * @return
+	 */
+	public static final List<Map<String, Object>> ListMapOrderByMapKeyAsc(List<Map<String, Object>> list,final String ... keys){
+		Collections.sort(list,new Comparator<Map>() {
+			public int compare(Map o1, Map o2) {
+				return recursion(o1, o2, 0);
+			}
+			private int recursion(Map o1, Map o2, int i) {
+				if (o1.containsKey(keys[i]) && o2.containsKey(keys[i])) {
+					Object value1 = o1.get(keys[i]);
+					Object value2 = o2.get(keys[i]);
+					if (value1 == null && value2 == null) {
+						if ((i+1) < keys.length) {
+							int recursion = recursion(o1, o2, i+1);
+							return recursion;
+						}else{
+							return 0;
+						}
+					}else if(value1 == null && value2 != null){
+						return 1;
+					}else if(value1 != null && value2 == null){
+						return -1;
+					}else{
+						if (value1.equals(value2)) {
+							if ((i+1) < keys.length) {
+								return recursion(o1, o2, i+1);
+							}else{
+								return 0;
+							}
+						}else{
+							if (value1 instanceof String && value2 instanceof String) {
+								return value1.toString().compareTo(value2.toString());
+							}else if(value1 instanceof Timestamp && value2 instanceof Timestamp){
+								return ((Timestamp)(value1)).compareTo(new Date(((Timestamp)(value2)).getTime()));
+							}else{
+								return new BigDecimal(value1.toString()).compareTo(new BigDecimal(value2.toString()));
+							}
+						}
+					}
+				}else{
+					System.out.println(" ** The current map do not containskey : " + keys[i] + ",or The value of key is null **");
+					return 0;
+				}
+			}
+		});
+		return list;
 	}
 
 	/**
@@ -585,5 +635,72 @@ public class Tool<T> {
 	public static String get32UUID() {
 		String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
 		return uuid;
+	}
+	public static String FormatNumzz(Object num_, Boolean kBool) {
+		String num=null;
+		if(num_==null||"".equals(num_.toString().trim())||"null".equals(num_.toString().trim()))return "0";
+		StringBuffer sb = new StringBuffer();
+		num=num_.toString().indexOf(".")>0?num_.toString().substring(0,num_.toString().indexOf(".")):num_.toString();
+		if (!StringUtils.isNumeric(num))
+			return "0";
+		if (kBool == null)
+			kBool = false;
+		BigDecimal b0 = new BigDecimal("1000");
+		BigDecimal b1 = new BigDecimal("10000");
+		BigDecimal b2 = new BigDecimal("100000000");
+		BigDecimal myself = new BigDecimal("100000");
+		if("".equals(num.trim()))return "0";
+		BigDecimal b3 = new BigDecimal(num);
+
+		String formatNumStr = "";
+		String nuit = "";
+
+		// 以千为单位处理
+		if (kBool) {
+			if (b3.compareTo(b0) == 0 || b3.compareTo(b0) == 1) {
+				return "999+";
+			}
+			return num;
+		}
+
+		// 以万为单位处理
+		if (b3.compareTo(b1) == -1) {
+			sb.append(b3.toString());
+		} else if ((b3.compareTo(b1) == 0 && b3.compareTo(b1) == 1)
+				|| b3.compareTo(b2) == -1) {
+			formatNumStr = b3.divide(b1).toString();
+			nuit = "w+";
+		} else if (b3.compareTo(b2) == 0 || b3.compareTo(b2) == 1) {
+			formatNumStr = b3.divide(b2).toString();
+			nuit = "e+";
+		}
+
+		if (!"".equals(formatNumStr)) {
+			if (Integer.parseInt(num) >= 10000 && Integer.parseInt(num) <= 100000) {
+				int i = formatNumStr.indexOf(".");
+				if (i == -1) {
+					sb.append(formatNumStr).append(nuit);
+				} else {
+					i = i + 1;
+					String v = formatNumStr.substring(i, i + 1);
+					if (!v.equals("0")) {
+						sb.append(formatNumStr.substring(0, i + 1)).append(nuit);
+					} else {
+						sb.append(formatNumStr.substring(0, i - 1)).append(nuit);
+					}
+				}
+			} else {
+				int i = formatNumStr.indexOf(".");
+				if(i==-1){
+					sb.append(formatNumStr).append(nuit);
+				}else{
+					sb.append(formatNumStr.substring(0, i)).append(nuit);
+				}
+
+			}
+		}
+		if (sb.length() == 0)
+			return "0";
+		return sb.toString();
 	}
 }

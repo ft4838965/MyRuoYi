@@ -1,7 +1,7 @@
 # 项目相关配置
 ruoyi:
   # 名称
-  name: 正速恒
+  name: 优造优享
   # 版本
   version: 4.0.0
   # 版权年份
@@ -9,7 +9,8 @@ ruoyi:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  #  profile: D:/项目测试路径/yzyx/fileupload
+  profile: /lijun/yzyx/fileupload
   # 获取ip地址开关
   addressEnabled: true
 

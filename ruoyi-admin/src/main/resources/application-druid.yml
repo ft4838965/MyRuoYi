@@ -6,9 +6,15 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://localhost:3306/zsh?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                url: jdbc:mysql://127.0.0.1:3306/yzyx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                 username: root
                 password: root
+    #            url: jdbc:mysql://120.79.213.156:3306/yzyx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    #            username: lijun
+    #            password: ft4838965
+    #            url: jdbc:mysql://127.0.0.1:3306/yzyx?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    #            username: root
+    #            password: cxwldbs123456
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭
