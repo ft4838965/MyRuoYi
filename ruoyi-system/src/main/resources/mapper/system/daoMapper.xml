@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.lijun.utils.Dao">
+<mapper namespace="com.ruoyi.system.mapper.Dao">
 	<select id="selectBySQL" resultType="map" parameterType="string">
 		${_parameter}
 	</select>
@@ -17,11 +17,4 @@
 
 	<delete id="deleteBySQL" parameterType="string">${_parameter}</delete>
 
-	<insert id="addSsoAccountFlows">
-		INSERT INTO t_sso_account_flow (id,sso_id,come_from,money,avilable_balance,frozen_balance,business_type,business_name,note,create_time)
-		VALUES
-		<foreach collection="safs" item="saf" separator=",">
-			(#{saf.id},#{saf.ssoId},#{saf.comeFrom},#{saf.money},#{saf.avilableBalance},#{saf.frozenBalance},#{saf.businessType},#{saf.businessName},#{saf.note},#{saf.createTime})
-		</foreach>
-	</insert>
 </mapper>

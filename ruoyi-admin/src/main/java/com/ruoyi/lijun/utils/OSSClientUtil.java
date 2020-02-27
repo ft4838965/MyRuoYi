@@ -19,11 +19,19 @@ public class OSSClientUtil {
     private String accessKeyId;
     private String accessKeySecret;
     private String bucketName;
+    private String folderPath="";
 
     public OSSClientUtil(String accessKeyId, String accessKeySecret, String bucketName) {
         this.accessKeyId = accessKeyId;
         this.accessKeySecret = accessKeySecret;
         this.bucketName = bucketName;
+    }
+
+    public OSSClientUtil(String accessKeyId, String accessKeySecret, String bucketName, String folderPath) {
+        this.accessKeyId = accessKeyId;
+        this.accessKeySecret = accessKeySecret;
+        this.bucketName = bucketName;
+        this.folderPath = folderPath;
     }
 
 
@@ -43,7 +51,7 @@ public class OSSClientUtil {
         String fileName=file.getOriginalFilename();
         String substring = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
         objectMetadata.setContentType(getcontentType(substring));
-        fileName= Tool.get32UUID()+substring;
+        fileName= (Tool.isNull(folderPath)?"":(folderPath+"/"))+Tool.get32UUID()+substring;
         objectMetadata.setContentDisposition("inline;filename=" + fileName);
         //上传文件
 
@@ -55,7 +63,7 @@ public class OSSClientUtil {
         if (instream != null) {
             instream.close();
         }
-        return new ModelMap("url","https://" + bucketName+"."+endpoint+ "/" + fileName).addAttribute("objectName",fileName);
+        return new ModelMap("url","https://" + bucketName+"."+endpoint+ "/"+fileName).addAttribute("objectName",fileName);
     }
 
     public static String getcontentType(String FilenameExtension) {

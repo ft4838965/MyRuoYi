@@ -597,7 +597,6 @@ function insertStep(wizard, options, state, index, step)
         throwError(_indexOutOfRangeErrorMessage);
     }
 
-    // TODO: Validate step object
 
     // Change data
     step = $.extend({}, stepModel, step);

@@ -2,6 +2,7 @@ package com.ruoyi.common.core.domain;
 
 import java.util.HashMap;
 import com.ruoyi.common.utils.StringUtils;
+import io.swagger.annotations.ApiModel;
 
 /**
  * 操作消息提醒
@@ -30,6 +31,10 @@ public class AjaxResult extends HashMap<String, Object>
         SUCCESS(0),
         /** 警告 */
         WARN(301),
+        /** 需要登录 */
+        NEED_LOGIN_AGAIN(304),
+        /** 需要填写上级邀请码 */
+        NEED_SUPERIOR_CODE(305),
         /** 错误 */
         ERROR(500);
         private final int value;
@@ -126,7 +131,7 @@ public class AjaxResult extends HashMap<String, Object>
 
     /**
      * 返回警告消息
-     * 
+     *
      * @param msg 返回内容
      * @return 警告消息
      */
@@ -137,7 +142,7 @@ public class AjaxResult extends HashMap<String, Object>
 
     /**
      * 返回警告消息
-     * 
+     *
      * @param msg 返回内容
      * @param data 数据对象
      * @return 警告消息
@@ -145,6 +150,48 @@ public class AjaxResult extends HashMap<String, Object>
     public static AjaxResult warn(String msg, Object data)
     {
         return new AjaxResult(Type.WARN, msg, data);
+    }
+
+    /**
+     * 返回需要登录消息
+     *
+     * @return 警告消息
+     */
+    public static AjaxResult needLogin()
+    {
+        return AjaxResult.needLogin("登录过期,请重新登录", null);
+    }
+    /**
+     * 返回需要登录消息
+     *
+     * @param msg 返回内容
+     * @return 警告消息
+     */
+    public static AjaxResult needLogin(String msg)
+    {
+        return AjaxResult.needLogin(msg, null);
+    }
+    /**
+     * 返回需要登录消息
+     *
+     * @param msg 返回内容
+     * @return 警告消息
+     */
+    public static AjaxResult needLogin(Object data)
+    {
+        return AjaxResult.needLogin("登录过期,请重新登录", data);
+    }
+
+    /**
+     * 返回需要登录消息
+     *
+     * @param msg 返回内容
+     * @param data 数据对象
+     * @return 警告消息
+     */
+    public static AjaxResult needLogin(String msg, Object data)
+    {
+        return new AjaxResult(Type.NEED_LOGIN_AGAIN, msg, data);
     }
 
     /**

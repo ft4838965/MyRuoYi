@@ -151,4 +151,14 @@ public class WXUtils {
             return true;
         }
     }
+
+    public static String errCodeToString(Object code){
+        if(Tool.isNull(code))return "(没有获取到错误代码)";
+        switch (code.toString()){
+            case "40163":return "code被重复使用";
+            case "40029":return "不合法的code";
+            case "40125":return "小程序配置不正确";
+            default:return "未知错误码:"+code;
+        }
+    }
 }

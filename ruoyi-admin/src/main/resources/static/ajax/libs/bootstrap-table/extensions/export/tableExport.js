@@ -1743,7 +1743,6 @@
                   teOptions.doc.addImage(image.src, cell.textPos.x, cell.y + uy, imgWidth, imgHeight);
                 }
                 catch (e) {
-                  // TODO: IE -> convert png to jpeg
                 }
                 cell.textPos.x += imgWidth;
               }

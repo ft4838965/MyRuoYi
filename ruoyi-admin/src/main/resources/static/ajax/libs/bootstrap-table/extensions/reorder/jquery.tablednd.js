@@ -346,7 +346,7 @@ jQuery.tableDnD = {
 
         // prevent touch device screen scrolling
         e.type === 'touchmove'
-            && event.preventDefault(); // TODO verify this is event and not really e
+            && event.preventDefault();
 
         // update the style to show we're dragging
         config.onDragClass

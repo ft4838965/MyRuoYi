@@ -39,7 +39,7 @@ public class SwaggerConfig
                 //.apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
-                .build();
+                .build().useDefaultResponseMessages(false);
     }
 
     /**

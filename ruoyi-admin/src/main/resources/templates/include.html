@@ -43,7 +43,94 @@
 	<script th:src="@{/ruoyi/js/ry-ui.js?v=4.0.0}"></script>
 	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
 </div>
+<!-- 后台自定义工具JS -->
+<div th:fragment=medias-module(typeArray,isAdd,folder_path)>
+	<input type="hidden" id="base_id" />
+	<input type="hidden" id="type" />
+	<script th:src="@{/js/manage_back_tool.js?v=2}"></script>
+	<script th:inline="javascript">
+		var isAdd=[[${isAdd}]];
+		if(isAdd=='true')isAdd=true;else isAdd=false;
+		var typeArray=[[${typeArray}]].split(',');
+		$(function () {
+			if(isAdd){
+				for(var i=0,len=typeArray.length;i<len;i++){
+					$('#'+typeArray[i]+'BaseId').val(guid());
+				}
+			}
 
+			$("#fileinput-demo-1").fileinput({
+				'showUploadedThumbs':false,//上传完成后,选择下一批图片时,此前上传成功的图片预览图是否保留
+				'layoutTemplates':{
+					actionDelete:'', //去除上传预览的缩略图中的删除图标
+					actionUpload:'',//去除上传预览缩略图中的上传图片；
+					actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+				},
+				'uploadAsync' : false, //true异步上传,false同步上传
+				'dropZoneEnabled':true,//是否显示拖拽区域(当用户选择文件后,该区域还是会显示的)
+				'allowedFileExtensions':['jpg','png'],//接收的文件后缀
+				'uploadUrl': '/tool/uploadMediaByBaseIdToAli',
+				'uploadExtraData':function () {
+					return {base_id:$("#base_id").val(),folder_path:[[${folder_path}]]};
+				},
+				// overwriteInitial: true,
+			}).on("filebatchuploadsuccess",function(event, data, previewId, index) {//同步上传返回结果
+				for (var i=0,len=data.response.data.length;i<len;i++) {
+					$('#'+$('#type').val()+'Item').prepend(liHtml(true,data.response.data[i]))
+				}
+				$('#myModal4').modal('hide');  //手动关闭
+			})
+			$('#myModal4').on('show.bs.modal', function (e) {//modal显示前
+				return $.trim($("#base_id").val()).length>0;
+			}).on('hidden.bs.modal', function () {//modal隐藏后
+				$("#fileinput-demo-1").fileinput('reset');
+				$('#base_id').val('')
+				$('#type').val('')
+			})
+			$('#myModal5').on('hidden.bs.modal', function () {//modal隐藏后
+				$('#modal-img,#modal-video').attr('src','');
+			})
+			
+			for(var i=0,len=typeArray.length;i<len;i++){
+				eval("$('#"+typeArray[i]+"Open').click(function () {\n" +
+						"$('#type').val('"+typeArray[i]+"');\n" +
+						"$('#base_id').val($('#"+typeArray[i]+"BaseId').val())\n" +
+						"$('#myModal4').modal('show')\n" +
+						"})")
+			}
+		})
+		for(var i=0,len=typeArray.length;i<len;i++){
+			eval('Sortable.create(document.getElementById("'+typeArray[i]+'Item"),{\n' +
+					'animation: 150,\n' +
+					'onEnd: function(){ \n' +
+					typeArray[i]+'Interval=setInterval(function () {\n' +
+					'$("#'+typeArray[i]+'Sort").animate({color:"#1ab394",backgroundColor:"#FFFFFF"},1000).animate({color:"#FFFFFF",backgroundColor:"#1ab394"},1000)\n' +
+					'},0)\n' +
+					'},\n' +
+					'});')
+		}
+	</script>
+	<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<img id="modal-img" src="" width="100%" data-dismiss="modal"  aria-hidden="true"/>
+
+			</div>
+			<video id="modal-video" src="" width="100%" data-dismiss="modal"  aria-hidden="true" controls></video>
+		</div>
+	</div>
+	<div class="modal fade" id="myModal4" tabindex="-2" role="document" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="form-group">
+					<div class="file-loading">
+						<input id="fileinput-demo-1" type="file" name="files" multiple>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- ztree树插件 -->
 <div th:fragment="ztree-css">
     <link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
@@ -172,4 +259,20 @@
 <div th:fragment="bootstrap-table-reorder-js">
 	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder/bootstrap-table-reorder.js}"></script>
 	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder/jquery.tablednd.js}"></script>
+</div>
+<!--jquert颜色动画插件-->
+<div th:fragment="jquery-color-js">
+	<script th:src="@{/js/jquery.color-2.1.2.min.js}"></script>
+</div>
+<!--layui的完整版css-->
+<div th:fragment="layui-css">
+	<link th:href="@{/ajax/libs/layui/css/layui.css}" rel="stylesheet"/>
+</div>
+<!--拖动排序插件-->
+<div th:fragment="Sortable-js">
+	<script th:src="@{/js/Sortable.min.js}"></script>
+</div>
+<!--js调色板插件-->
+<div th:fragment="color-js">
+	<script th:src="@{/js/colorpicker.js}"></script>
 </div>

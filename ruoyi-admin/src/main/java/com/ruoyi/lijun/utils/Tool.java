@@ -60,44 +60,6 @@ public class Tool<T> {
 		return url.delete(url.length() - ((HttpServletRequest)getRequest_Response_Session()[0]).getRequestURI().length(), url.length()).append("").toString();
 	}
 	/**
-	 * 获取Ip地址
-	 * @return
-	 */
-	public static String getIpAdrress() {
-		HttpServletRequest request= (HttpServletRequest) getRequest_Response_Session()[0];
-		String Xip = request.getHeader("X-Real-IP");
-		String XFor = request.getHeader("X-Forwarded-For");
-		if(StringUtils.isNotEmpty(XFor) && !"unKnown".equalsIgnoreCase(XFor)){
-			//多次反向代理后会有多个ip值，第一个ip才是真实ip
-			int index = XFor.indexOf(",");
-			if(index != -1){
-				return XFor.substring(0,index);
-			}else{
-				return XFor;
-			}
-		}
-		XFor = Xip;
-		if(StringUtils.isNotEmpty(XFor) && !"unKnown".equalsIgnoreCase(XFor)){
-			return XFor;
-		}
-		if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
-			XFor = request.getHeader("Proxy-Client-IP");
-		}
-		if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
-			XFor = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
-			XFor = request.getHeader("HTTP_CLIENT_IP");
-		}
-		if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
-			XFor = request.getHeader("HTTP_X_FORWARDED_FOR");
-		}
-		if (StringUtils.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
-			XFor = request.getRemoteAddr();
-		}
-		return XFor;
-	}
-	/**
 	 * 辅助方法:判断字符串是否为空字符串或空
 	 * @param string
 	 * @return
@@ -702,5 +664,30 @@ public class Tool<T> {
 		if (sb.length() == 0)
 			return "0";
 		return sb.toString();
+	}
+
+	/**
+	 * 根据HttpServletRequest获取真实IP
+	 * @param request
+	 * @return
+	 */
+	public static String getIpAddress(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
 	}
 }

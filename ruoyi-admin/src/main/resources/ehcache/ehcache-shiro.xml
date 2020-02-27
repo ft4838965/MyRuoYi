@@ -22,6 +22,22 @@
            overflowToDisk="false"
            statistics="true">
     </cache>
+
+    <!-- 微信wx.login在服务器端维护的登录状态码 不管用不用,1小时失效 -->
+    <cache name="wxSessionIdCache"
+           maxEntriesLocalHeap="300"
+           eternal="false"
+           timeToLiveSeconds="600"
+           overflowToDisk="false">
+    </cache>
+
+    <!-- 手机验证码缓存 不管用不用,1小时失效 -->
+    <cache name="verificationCode"
+           maxEntriesLocalHeap="300"
+           eternal="false"
+           timeToLiveSeconds="600"
+           overflowToDisk="false">
+    </cache>
     
      <!-- 系统活跃用户缓存 -->
     <cache name="sys-userCache"

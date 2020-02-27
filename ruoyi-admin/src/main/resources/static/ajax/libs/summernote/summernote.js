@@ -2355,7 +2355,6 @@
           pred = pred || func.ok;
           var includeAncestor = options && options.includeAncestor;
           var fullyContains = options && options.fullyContains;
-          // TODO compare points and sort
           var startPoint = this.getStartPoint();
           var endPoint = this.getEndPoint();
           var nodes = [];
@@ -5721,7 +5720,6 @@
                                   tooltip: _this.options.tooltip
                               }).render());
                           });
-                          /* TODO: do we have to record recent custom colors within cookies? */
                           var customColors = [
                               ['#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'],
                           ];
@@ -7521,8 +7519,6 @@
               'statusbar': Statusbar,
               'fullscreen': Fullscreen,
               'handle': Handle,
-              // FIXME: HintPopover must be front of autolink
-              //  - Script error about range when Enter key is pressed on hint popover
               'hintPopover': HintPopover,
               'autoLink': AutoLink,
               'autoSync': AutoSync,

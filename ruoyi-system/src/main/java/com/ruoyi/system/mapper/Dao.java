@@ -1,4 +1,4 @@
-package com.ruoyi.lijun.utils;
+package com.ruoyi.system.mapper;
 
 
 import java.util.List;

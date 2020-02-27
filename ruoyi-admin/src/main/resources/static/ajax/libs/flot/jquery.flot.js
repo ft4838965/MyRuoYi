@@ -444,7 +444,6 @@
                 var sign = variation % 2 == 1 ? -1 : 1;
                 c.scale('rgb', 1 + sign * Math.ceil(variation / 2) * 0.2)
 
-                // FIXME: if we're getting to close to something else,
                 // we should probably skip this one
                 colors.push(c);
 
@@ -1943,7 +1942,6 @@
 
             var lw = series.lines.lineWidth,
                 sw = series.shadowSize;
-            // FIXME: consider another form of shadow when filling is turned on
             if (lw > 0 && sw > 0) {
                 // draw shadow as a thick and thin line with transparency
                 ctx.lineWidth = sw;
@@ -2110,7 +2108,6 @@
             if (lineWidth > 0 && (drawLeft || drawRight || drawTop || drawBottom)) {
                 c.beginPath();
 
-                // FIXME: inline moveTo is buggy with excanvas
                 c.moveTo(left, bottom + offset);
                 if (drawLeft)
                     c.lineTo(left, top + offset);
@@ -2146,7 +2143,6 @@
             ctx.save();
             ctx.translate(plotOffset.left, plotOffset.top);
 
-            // FIXME: figure out a way to add shadows (for instance along the right edge)
             ctx.lineWidth = series.bars.lineWidth;
             ctx.strokeStyle = series.color;
             var barLeft = series.bars.align == "left" ? 0 : -series.bars.barWidth/2;
